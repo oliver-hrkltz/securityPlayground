@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+</head>
+
+<body>
+</body>
+
+<script>
+    function encrypt(plainText, password) {
+        return CryptoJS.AES.encrypt(plainText, password);
+    }
+
+
+    function decrypt(encrypted, password) {
+        const decrypted = CryptoJS.AES.decrypt(encrypted, password).toString(CryptoJS.enc.Utf8);
+        return (decrypted != '') ? decrypted : 'Wrong password.';
+    }
+
+
+    let password = window.prompt('', '');
+
+    if ((password == null) || (password == '')) {
+        window.location.reload();
+    }
+
+    const plainText = "Hello World!";
+    document.body.innerHTML += `<p>plaintText: ${plainText}</p>`
+    const encryptedText = encrypt(plainText, password);
+    document.body.innerHTML += `<p>encryptedText: ${encryptedText}</p>`
+    document.body.innerHTML += `<p>decrypt with ${password}: ${decrypt(encryptedText, password)}</p>`
+    document.body.innerHTML += `<p>decrypt with ${password + 'a'}: ${decrypt(encryptedText, password + 'a')}</p>`
+</script>
+
+</html>
